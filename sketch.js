@@ -20,7 +20,9 @@ function setup() {
   balloon.scale=0.5;
 
   var balloonHeight=database.ref('balloon/height');
-  balloonHeight.on("value",readHeight, console.log("error"));
+  balloonHeight.on("value",readHeight,showError);
+   balloon.scale=0.4;
+   
   textSize(20); 
 }
 
@@ -35,15 +37,18 @@ function draw() {
   else if(keyDown(RIGHT_ARROW)){
     updateHeight(10,0);
     //add the animation of balloon [use balloonImage2]
+    balloon.addAnimation("hotAirBalloon",balloonImage2);
   }
   else if(keyDown(UP_ARROW)){
     updateHeight(0,-10);
  //add the animation of balloon [use balloonImage2]
+    balloon.addAnimation("hotAirBalloon",balloonImage2);
     balloon.scale=balloon.scale -0.005;
   }
   else if(keyDown(DOWN_ARROW)){
     updateHeight(0,+10);
   //add the animation of balloon [use balloonImage2]
+    balloon.addAnimation("hotAirBalloon",balloonImage2);
     balloon.scale=balloon.scale+0.005;
   }
 
@@ -68,7 +73,10 @@ function updateHeight(x,y){
 
 function readHeight(data){
   //assign the value of data to height
+   height=data.val();
   //assign the x and y value of height to the respective x and y position of balloon
+   balloon.x=height.x;
+   balloon.y=height.y
  }
 
 function showError(){
